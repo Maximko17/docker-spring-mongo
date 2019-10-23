@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  app-server:
+    container_name: spring
+    build: .
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - ./datadir:/var/lib/mongo
+
+  app-client:
+    container_name: react
+    build:
+      context:
+    depends_on:
+      - app-server
